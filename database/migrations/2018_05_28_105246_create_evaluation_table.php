@@ -19,7 +19,7 @@ class CreateEvaluationTable extends Migration
             $table->tinyInteger('worth_buying')->default(0);
             $table->tinyInteger('designing')->default(0);
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('user_id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('product_id')->on('product');
             $table->string('description');

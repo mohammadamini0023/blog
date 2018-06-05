@@ -3,7 +3,7 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Comment::class, function (Faker $faker) {
-    $users = App\User::pluck('user_id')->toArray();
+    $users = App\User::pluck('id')->toArray();
     $product = App\Product::pluck('product_id')->toArray();
     return [
         'body' => $faker->sentence,

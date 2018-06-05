@@ -17,12 +17,12 @@ class CreateCommentTable extends Migration
             $table->increments('comment_id');
             $table->text('body');
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('user_id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('product_id')->on('product');
             $table->text('replay');
             $table->integer('user_id2')->unsigned();
-            $table->foreign('user_id2')->references('user_id')->on('users');
+            $table->foreign('user_id2')->references('id')->on('users');
             $table->timestamps();
         });
     }

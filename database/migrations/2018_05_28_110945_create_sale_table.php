@@ -16,7 +16,7 @@ class CreateSaleTable extends Migration
         Schema::create('sale', function (Blueprint $table) {
             $table->increments('sale_id');
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('user_id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('product_id')->on('product');
             $table->integer('sprice');

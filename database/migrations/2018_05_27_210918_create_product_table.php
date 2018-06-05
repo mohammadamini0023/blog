@@ -19,7 +19,7 @@ class CreateProductTable extends Migration
             $table->integer('pprice');
             $table->string('category');
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('user_id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('color');
             $table->string('description');
             $table->boolean('shipping_goods');
