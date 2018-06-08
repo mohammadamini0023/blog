@@ -21,6 +21,7 @@ class CreateSaleTable extends Migration
             $table->foreign('product_id')->references('product_id')->on('product');
             $table->integer('sprice');
             $table->boolean('payment_getway');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

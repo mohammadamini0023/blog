@@ -15,11 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// route auth
 Auth::routes();
-
-
 Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
+//Add Product 
+Route::get('/home/AddProductGet', 'HomeController@AddProductGet')->name('AddProductGet');
 
-Route::get('/home', 'HomeController@index')->name('home');
+

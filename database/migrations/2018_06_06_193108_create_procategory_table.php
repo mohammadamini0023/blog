@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBiddingTable extends Migration
+class CreateProcategoryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateBiddingTable extends Migration
      */
     public function up()
     {
-        Schema::create('bidding', function (Blueprint $table) {
-            $table->increments('Bidding_id');
+        Schema::create('procategory', function (Blueprint $table) {
+            $table->increments('procategory_id');
+            $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')->references('category_id')->on('category');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('product_id')->unsigned();
-            $table->foreign('product_id')->references('product_id')->on('product');
-            $table->integer('bprice');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -32,6 +31,6 @@ class CreateBiddingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('_bidding');
+        Schema::dropIfExists('procategory');
     }
 }

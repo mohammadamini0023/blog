@@ -7,7 +7,6 @@ $factory->define(App\Product::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'pprice' => $faker->randomNumber(2),
-        'category' => $faker->lexify('category ???'),
         'user_id' => $faker->randomElement($users),
         'color' => $faker->colorName,
         'description' => $faker->sentence,

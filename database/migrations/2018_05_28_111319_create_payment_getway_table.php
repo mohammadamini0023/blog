@@ -20,6 +20,7 @@ class CreatePaymentGetwayTable extends Migration
         //     $table->integer('product_id')->unsigned();
         //     $table->foreign('product_id')->references('product_id')->on('product');
         //     $table->integer('price');
+        //     $table->softDeletes();
         //     $table->timestamps();
         // });
     }

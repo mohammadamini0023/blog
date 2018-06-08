@@ -23,6 +23,7 @@ class CreateCommentTable extends Migration
             $table->text('replay');
             $table->integer('user_id2')->unsigned();
             $table->foreign('user_id2')->references('id')->on('users');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

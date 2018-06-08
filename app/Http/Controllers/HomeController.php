@@ -21,8 +21,15 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     // contoroller show home auth
     public function index()
     {
         return view('home');
+    }
+    // contoriller show page AddProduct
+    public function AddProductGet()
+    {
+        return view('panel.addproduct');
     }
 }
