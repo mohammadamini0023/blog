@@ -26,6 +26,8 @@ class CreateProductTable extends Migration
             $table->timestamps();
             $table->datetime('expiration_at');
 
+
+
           });
 
     }

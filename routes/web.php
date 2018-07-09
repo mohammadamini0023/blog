@@ -19,7 +19,15 @@ Route::get('/', function () {
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
-//Add Product 
+//Add Product
 Route::get('/home/AddProductGet', 'HomeController@AddProductGet')->name('AddProductGet');
+Route::post('/home/AddProductPost','HomeController@AddProductPost')->name('AddProductPost');
+
+//show product
+Route::get('/home/ShowProduct/{id}','HomeController@ShowProduct')->name('ShowProduct',['id']);
+
+//send mail
+Route::get('/users/confirmation/{token}','Auth\RegisterController@confrimation')->name('confrimation');
+
 
 
