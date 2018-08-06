@@ -81,14 +81,16 @@
                 <div class="title m-b-md">
                     Laravel
                 </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+                @foreach($product as $products)
+                @foreach($img as $imgs)
+                @if($imgs->product_id == $products->product_id)
+                <img src="{{ asset('/uploads/'.$imgs->path) }}" alt="" width="100">
+                @endif
+                @endforeach
+                <h6>{{$products->name}}</h6>
+                <a href="{{ route('singlepage',['product_id'=>$products->product_id]) }}">other</a>
+                <div></div>
+                @endforeach
             </div>
         </div>
     </body>

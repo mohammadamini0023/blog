@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'IndexController@showindex')->name('showindex');
 
 // route auth
 Auth::routes();
@@ -26,8 +24,19 @@ Route::post('/home/AddProductPost','HomeController@AddProductPost')->name('AddPr
 //show product
 Route::get('/home/ShowProduct/{id}','HomeController@ShowProduct')->name('ShowProduct',['id']);
 
+//delete product
+Route::get('/home/deleteProduct/{user_id}/{product_id}','HomeController@DeleteProduct')->name('deleteproduct',['product_id','user_id']);
+
+//update product
+Route::get('/home/updataproductGet/{product_id}','HomeController@updataproductGet')->name('updataproductGet',['product_id']);
+Route::post('/home/updataproductPost/{product_id}','HomeController@updataproductPost')->name('updataProductPost',['product_id']);
+
 //send mail
 Route::get('/users/confirmation/{token}','Auth\RegisterController@confrimation')->name('confrimation');
+
+//singlepage show
+Route::get('/Singlepage/{product_id}','Indexcontroller@singlepage')->name('singlepage',['product_id']);
+
 
 
 

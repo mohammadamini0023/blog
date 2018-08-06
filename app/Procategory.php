@@ -16,9 +16,4 @@ class Procategory extends Model
         return $this->hasMany('App\Category','category_id','category_id');
     }
 
-    public function product()
-    {
-        return $this->hasMany('App\Product','product_id','product_id');
-    }
-
 }

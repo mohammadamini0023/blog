@@ -10,4 +10,9 @@ class Category extends Model
     protected $fillable = [
         'user_id','category','description',
     ];
+
+    public function procategory()
+    {
+        return $this->belongsTo('App\Procategory','category_id','category_id');
+    }
 }
