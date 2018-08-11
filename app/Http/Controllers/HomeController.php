@@ -128,4 +128,27 @@ class HomeController extends Controller
             return redirect()->action('HomeController@ShowProduct',['id' => Auth::id()]);
             }
 
+            public function Bidding(  Request $request)
+            {
+                DB::table('Bidding')->insert([
+                    'user_id' => $request['user_id'],
+                    'product_id' => $product_id = $request['product_id'],
+                    'bprice' => $bprice = $request['bprice'],
+                ]);
+                return redirect()->action('Indexcontroller@singlepage',['product_id' => $product_id])->with('status','پیشنهاد قیمت شما با {{ $bprice }}موفقیت ثبت شد');
+            }
+
+            public function sendcomment( Request $request )
+            {
+                DB::table('comment')->insert([
+                    'user_id' => $request['user_id'],
+                    'product_id' => $product_id = $request['product_id'],
+                    'body' =>  $request['body'],
+                    'replay' => $request['body'],
+                    'user_id2' => $request['user_id'],
+                ]);
+                return redirect()->action('Indexcontroller@singlepage',['product_id' => $product_id])->with('status','نظر شما با موفقیت ثبت شد.');
+
+            }
+
 }

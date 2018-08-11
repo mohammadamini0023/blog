@@ -17,4 +17,9 @@ class Product extends Model
     {
         return $this->hasMany('App\Procategory','product_id','product_id');
     }
+
+    public function bidding()
+    {
+        return $this->hasMany('App\Bidding','product_id','product_id');
+    }
 }

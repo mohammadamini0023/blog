@@ -37,6 +37,10 @@ Route::get('/users/confirmation/{token}','Auth\RegisterController@confrimation')
 //singlepage show
 Route::get('/Singlepage/{product_id}','Indexcontroller@singlepage')->name('singlepage',['product_id']);
 
+//Bidding ثبت قیمت
+Route::post('/Singlepage/{product_id}','HomeController@Bidding')->name('Bidding',['product_id']);
 
+//sendcomment
+Route::post('/Singlepage/{product_id}/sendcomment','HomeController@sendcomment')->name('sendcomment',['product_id']);
 
 

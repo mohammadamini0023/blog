@@ -15,8 +15,10 @@ class IndexController extends Controller
 
     public function Singlepage($product_id)
     {
-        $product = \App\Product::get()->where('producct_id','=',$product_id);
+        $product = \App\Product::get()->where('product_id','=',$product_id);
         $upload  = \App\Upload_image::get();
-        return view('singlepage',['product' => $product , 'upload' => $upload]);
+        $bidding = \App\Bidding::get()->where('product_id','=',$product_id);
+        $comment = \App\Comment::get()->where('product_id','=',$product_id);
+        return view('singlepage',['product' => $product , 'upload' => $upload , 'bidding' => $bidding , 'comment' => $comment]);
     }
 }
