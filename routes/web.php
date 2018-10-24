@@ -12,6 +12,10 @@
 */
 
 Route::get('/', 'IndexController@showindex')->name('showindex');
+Route::post('/', 'IndexController@showindex')->name('showindex1');
+//Route::get('/get', 'IndexController@showindex1')->name('showindex2');
+
+
 
 // route auth
 Auth::routes();
@@ -42,5 +46,7 @@ Route::post('/Singlepage/{product_id}','HomeController@Bidding')->name('Bidding'
 
 //sendcomment
 Route::post('/Singlepage/{product_id}/sendcomment','HomeController@sendcomment')->name('sendcomment',['product_id']);
+
+
 
 

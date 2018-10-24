@@ -19,6 +19,8 @@ class CreateProductTable extends Migration
             $table->integer('pprice');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('pcity')->unsigned();
+            $table->foreign('pcity')->references('city_id')->on('city');
             $table->string('color');
             $table->string('description');
             $table->boolean('shipping_goods');
