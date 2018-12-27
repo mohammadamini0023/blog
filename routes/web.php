@@ -11,29 +11,74 @@
 |
 */
 
-Route::get('/', 'IndexController@showindex')->name('showindex');
-Route::post('/', 'IndexController@showindex')->name('showindex1');
-//Route::get('/get', 'IndexController@showindex1')->name('showindex2');
+Route::get('/getcity', 'IndexController@showindex')->name('showindex');
+Route::post('/postcity', 'IndexController@showindex')->name('showindex1');
+Route::get('/', 'IndexController@showindex2')->name('showindex2');
+
+
+
 
 
 
 // route auth
 Auth::routes();
+//user panel
 Route::get('/home', 'HomeController@index')->name('home');
+//admin panel
+Route::get('/admin/home', 'AdminController@index')->name('admin');
 
-//Add Product
-Route::get('/home/AddProductGet', 'HomeController@AddProductGet')->name('AddProductGet');
-Route::post('/home/AddProductPost','HomeController@AddProductPost')->name('AddProductPost');
+Route::prefix('admin/home')->group(function () {
 
-//show product
-Route::get('/home/ShowProduct/{id}','HomeController@ShowProduct')->name('ShowProduct',['id']);
+    //create category
+    Route::get('/Create-Category-Get', 'AdminController@CreateCategoryGet')->name('CreateCategoryGet');
+    Route::Post('/Create-Category-Post', 'AdminController@CreateCategoryPost')->name('CreateCategoryPost');
+    //show category
+    Route::get('/show-Category', 'AdminController@showcategory')->name('showcategory');
+    //create city
+    Route::view('/create-city', 'admin.createcity')->name('createcity');
+    Route::Post('/Create-city-post', 'AdminController@createcitypost')->name('createcitypost');
+    //show city
+    Route::get('/show-city', 'AdminController@showcity')->name('showcity');
+    //show check product
+    Route::get('/show-check-product', 'AdminController@showcheckproduct')->name('showcheckproduct');
+    //set check product
+    Route::get('/show-check-product/{product_id}', 'AdminController@checkproduct')->name('checkproduct',['product_id']);
+    //check product reject
+    Route::get('/show-check-product-reject/{product_id}', 'AdminController@checkproductreject')->name('checkproductreject',['product_id']);
 
-//delete product
-Route::get('/home/deleteProduct/{user_id}/{product_id}','HomeController@DeleteProduct')->name('deleteproduct',['product_id','user_id']);
+});
 
-//update product
-Route::get('/home/updataproductGet/{product_id}','HomeController@updataproductGet')->name('updataproductGet',['product_id']);
-Route::post('/home/updataproductPost/{product_id}','HomeController@updataproductPost')->name('updataProductPost',['product_id']);
+
+Route::prefix('users/home')->group(function () {
+
+    //Add Product
+    Route::get('/AddProductGet/selectcategory', 'HomeController@AddProductGet')->name('AddProductGet');
+    Route::get('/AddProductGet1/selectcategory/{category_id}', 'HomeController@AddProductGet1')->name('AddProductGet1',['category_id']);
+    Route::post('/AddProductPost','HomeController@AddProductPost')->name('AddProductPost');
+
+    //show product
+    Route::get('/ShowProduct/{id}','HomeController@ShowProduct')->name('ShowProduct',['id']);
+
+    //show reject product
+    Route::get('/showrejectproduct/{id}','HomeController@showrejectproduct')->name('showrejectproduct',['id']);
+
+    //showbidding
+    Route::get('/Showbidding/{id}','HomeController@Showbidding')->name('Showbidding',['id']);
+
+    //delete product
+    Route::get('/deleteProduct/{user_id}/{product_id}','HomeController@DeleteProduct')->name('deleteproduct',['product_id','user_id']);
+
+    //update product
+    Route::get('/updataproductGet/{product_id}','HomeController@updataproductGet')->name('updataproductGet',['product_id']);
+    Route::post('/updataproductPost/{product_id}','HomeController@updataproductPost')->name('updataProductPost',['product_id']);
+
+    //edite city
+    Route::get('/editecity','HomeController@editecity')->name('editecity');
+
+    //auctions winner
+    Route::get('/auctionswinner/{user_id}','HomeController@auctionswinner')->name('auctionswinner',['user_id']);
+});
+
 
 //send mail
 Route::get('/users/confirmation/{token}','Auth\RegisterController@confrimation')->name('confrimation');

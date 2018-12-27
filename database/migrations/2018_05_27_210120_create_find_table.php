@@ -17,7 +17,6 @@ class CreateFindTable extends Migration
             $table->increments('find_id');
             $table->tinyInteger('user_id')->nullable();
             $table->string('find');
-            $table->softDeletes();
             $table->timestamps();
         });
     }

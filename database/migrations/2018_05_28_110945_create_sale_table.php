@@ -13,6 +13,7 @@ class CreateSaleTable extends Migration
      */
     public function up()
     {
+        // این جدول باید خذف شود
         Schema::create('sale', function (Blueprint $table) {
             $table->increments('sale_id');
             $table->integer('user_id')->unsigned();

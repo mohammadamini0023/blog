@@ -23,7 +23,7 @@
                         <select name="entercity" id="city">
                             <option></option>
                             @foreach($city as $citys)
-                            <option value="{{$citys->id}}">{{$citys->city}}</option>
+                            <option value="{{$citys->city_id}}">{{$citys->city}}</option>
                             @endforeach
                         </select>
                         <button type="submit" class="btn btn-primary">Submit</button>

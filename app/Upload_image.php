@@ -10,4 +10,8 @@ class Upload_image extends Model
     protected $fillable = [
         'product_id','path',
     ];
+    public function upload_image()
+    {
+        return $this->belongsTo('App\Product','product_id','product_id');
+    }
 }

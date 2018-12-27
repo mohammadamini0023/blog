@@ -24,8 +24,6 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('phone')->nullable();
             $table->string('adress')->nullable();
-            $table->tinyInteger('coin')->default(5);
-            $table->softDeletes();
             $table->timestamps();
 
         });

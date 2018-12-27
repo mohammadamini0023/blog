@@ -1,14 +1,20 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>ebay</title>
+        <title>lara</title>
         <meta charset="utf8">
     </head>
     <body>
-            @extends('layouts.app')
-            @section('content')
-            @endsection
-            salam
-            
+
+            @foreach($product as $products)
+                {{ var_dump($products) }} <br>
+                <a href="{{ route('singlepage',['product_id'=>$products->product_id]) }}">other</a>
+                <hr>
+                @endforeach
+
+
+
+
+
     </body>
 </html>

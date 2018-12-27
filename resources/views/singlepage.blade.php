@@ -15,7 +15,7 @@
         <div class="row justify-content-center">
             <div class="card-header">Dashboard</div></div>
             @foreach($product as $products)
-            @foreach($upload as $uploads)
+            {{-- @foreach($upload as $uploads)
             @if($uploads->product_id == $products->product_id)
             <img src="{{ asset('/uploads/'.$uploads->path) }}" alt="">
             @endif
@@ -35,13 +35,14 @@
             </form>
             @else
             <a href="{{ route('register') }}">برای ثبت قیمت و شرکت در مزایده عضو شوید</a>
-            @endif
+            @endif --}}
+            {{ dd($products) }}
             @endforeach
 
         </div>
     </div>
     <div>
-            <table class="table">
+            {{-- <table class="table">
                     <thead>
                       <tr>
                         <th>Firstname</th>
@@ -60,10 +61,10 @@
                       </tr>
                      @endforeach
                     </tbody>
-                  </table>
+                  </table> --}}
     </div>
     <div>
-        @if (Auth::check())
+        {{-- @if (Auth::check())
         <form action="{{ route('sendcomment',['product_id'=>$products->product_id]) }}" method="POST">
             <div class="form-group">
                     {!! csrf_field() !!}
@@ -76,11 +77,11 @@
         </form>
         @else
         <a href="{{ route('register') }}">برای ثبت نظر عضو سایت شوید. </a>
-        @endif
+        @endif --}}
     </div>
 
     <div>
-        <div class="detailBox">
+        {{-- <div class="detailBox">
                 <div class="titleBox">
                   <label>Comment Box</label>
                     <button type="button" class="close" aria-hidden="true">&times;</button>
@@ -101,7 +102,7 @@
                         @endforeach
                     </ul>
                 </div>
-            </div>
+            </div> --}}
     </div>
 
 </body>

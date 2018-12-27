@@ -19,51 +19,61 @@
                             {{ session('status') }}
                         </div>
                         @endif
-                    <form method="POST" action="{{ route('AddProductPost')}}" enctype="multipart/form-data">
+
+                     <form method="POST" action="{{ route('AddProductPost')}}" enctype="multipart/form-data">
                         {!! csrf_field() !!}
                     <input type="hidden" name="user_id" value="{{ auth::id() }}">
+                    <input type="hidden" name="category" value="{{$category}}">
+
                             <fieldset enabled>
                                 <div class="form-group">
-                                    <label for="name">Name</label>
-                                    <input type="text" id="name" name="name" class="form-control" placeholder="Name">
+                                    <label for="city">city</label>
+                                    <select id="city" name="city" class="form-control">
+                                    @foreach($city as $citys)
+                                        <option value="{{ $citys->city_id }}">{{ $citys->city }}</option>
+                                    @endforeach
+                                </select>
                                 </div>
+
                                 <div class="form-group">
                                     <label for="price">price</label>
                                     <input type="text" id="price" name="pprice" class="form-control" placeholder="price">
                                 </div>
-                                <div class="form-group">
-                                    <label for="color">color</label>
-                                    <select id="color" name="color" class="form-control">
-                                        <option>green</option>
-                                        <option>yellow</option>
-                                        <option>red</option>
-                                        <option>blue</option>
-                                    </select>
+
+                                <div>
+                                    <label for="title_product">title product</label>
+                                    <input type="text" name="title_product" id="">
                                 </div>
-                                <div class="form-group">
-                                    <label for="category">category</label>
-                                    <select id="category" name="category" class="form-control">
-                                        @foreach($category as $categoris)
-                                        <option value="{{$categoris}}" >{{$categoris}}</option>
-                                        @endforeach
-                                    </select>
+
+                                <div>
+                                    <label for="body_product">body product</label>
+                                    <input type="text" name="body_product" id="">
                                 </div>
+
+                                <div>
+                                    <label for="expiration"></label>
+                                    <input type="text" name="expiration" id="">
+                                </div>
+
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                       <span class="input-group-text">Upload image</span>
                                     </div>
                                     <div class="custom-file">
-                                      <input type="file" name="upimg" class="custom-file-input" id="inputGroupFile01">
+                                      <input type="file" name="upimg[]" class="custom-file-input" id="inputGroupFile01" multiple >
                                       <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
                                   </div>
-                                <div class="form-group">
-                                    <label for="description">description</label>
-                                    <input type="text" class="form-control" name="description" id="description "  placeholder="enter discription"></input>
-                                </div>
+
+
+
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </fieldset>
                         </form>
+
+
+
+
                     </div>
                 </div>
             </div>

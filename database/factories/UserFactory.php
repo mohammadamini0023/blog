@@ -18,11 +18,11 @@ $factory->define(App\User::class, function (Faker $faker) {
         'name' => $faker->name,
         'family' => $faker->name,
         'email' => $faker->unique()->safeEmail,
+        'verify_email' => 1,
         'password' => $faker->numberbetween(111111,99999999), // secret
         'phone' => $faker->numberbetween(111111,9999999),
         'adress' => $faker->name,
-        'coin' => $faker->numberbetween(5,20),
 
-        
+
     ];
 });

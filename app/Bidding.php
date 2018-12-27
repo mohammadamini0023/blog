@@ -16,5 +16,10 @@ class Bidding extends Model
         return $this->hasMany('App\User','id','user_id');
     }
 
+    public function product()
+    {
+        return $this->belongsTo('App\Product','product_id','product_id');
+    }
+
 
 }

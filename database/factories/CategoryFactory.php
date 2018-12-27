@@ -1,11 +1,13 @@
 <?php
 
 use Faker\Generator as Faker;
-
+use Carbon\Carbon;
 $factory->define(App\Category::class, function (Faker $faker) {
     return [
-        'user_id' => $faker->numberbetween(1,25),
+
         'category' => $faker->name,
-        'description' => $faker->name,
+        'parent_id' => $faker->numberbetween(0,5),
+        'created_at' => Carbon::now(),
+        'updated_at' => Carbon::now()
     ];
 });
