@@ -1,20 +1,16 @@
 <!doctype html>
-<html lang="en">
     <head>
-        <title>lara</title>
-        <meta charset="utf8">
+        <meta charset="utf-8">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <title>Laravel</title>
+        <!-- Styles -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="/css/app.css">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/Main.css">
     </head>
     <body>
-
-            @foreach($product as $products)
-                {{ var_dump($products) }} <br>
-                <a href="{{ route('singlepage',['product_id'=>$products->product_id]) }}">other</a>
-                <hr>
-                @endforeach
-
-
-
-
-
+      <div id="root"></div>
+      <script type="text/javascript" src="/js/app.js"></script>
     </body>
 </html>
