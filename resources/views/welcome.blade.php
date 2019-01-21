@@ -6,7 +6,7 @@
         <!-- Styles -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="/css/app.css">
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/material-components-web.min.css">
         <link rel="stylesheet" href="/css/Main.css">
     </head>
     <body>

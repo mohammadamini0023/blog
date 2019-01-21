@@ -9,16 +9,21 @@ import Body from './Body';
 class MenuRight extends Component {
   constructor (props){
     super(props)
-    this.state = {categorys: props.categorys};
+    this.state = {categorys:[]};
     this.renderRow=this.renderRow.bind(this);
     this.ButtonClick=this.ButtonClick.bind(this);
   }
 
-
-  componentWillMount(){
-    this.state = {categorys: this.props.categorys};
-    console.log(this.state.categorys);
+  componentDidMount(){
+    Axios.get('api/category').then((response) => {
+      this.setState({
+        categorys : response.data,
+      });
+    }).catch( (error) => {
+      console.log(error);
+    });
   }
+
 
 
   allcategory(){
