@@ -19,3 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('category','ApiController@showcategoryget')->name('showcategoryget');
 Route::get('category/get','ApiController@showcategorypost')->name('showcategorypost');
+
+Route::get('AllProduct','ApiController@showallproduct')->name('showallproduct');
