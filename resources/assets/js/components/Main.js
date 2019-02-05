@@ -136,9 +136,9 @@ class Products extends React.Component{
       return(
         <Cell key={product.product_id} columns={3}  >
           <Card>
-              
                 <h5>{product.title_product}</h5>
-             
+
+                
           </Card>
         </Cell>
         );
