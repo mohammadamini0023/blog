@@ -19,6 +19,8 @@ class CreateProductTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('pcity')->unsigned();
             $table->foreign('pcity')->references('city_id')->on('city');
+            $table->integer('procategory')->unsigned();
+            $table->foreign('procategory')->references('category_id')->on('category');
             $table->integer('field_id')->default(0);
             $table->string('Coordinates')->default(0);
             $table->integer('pprice');
@@ -31,6 +33,7 @@ class CreateProductTable extends Migration
             $table->softDeletes();
             $table->timestamps();
           });
+          
 
     }
 

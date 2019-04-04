@@ -19,7 +19,6 @@ class CreateUploadImageTable extends Migration
             $table->foreign('product_id')->references('product_id')->on('product');
             $table->string('path');
             $table->softDeletes();
-            $table->timestamps();
 
         });
     }

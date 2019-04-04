@@ -28,16 +28,16 @@ public function showindex(Request $request)
 
     public function showindex2(Request $request )
     {
-        if ($request->hasCookie('city')) {
-            $mycity = $request->cookie('city');
-            $product = \App\Product::get()->where('pcity','=',$mycity , 'confirm_manager',1);
-            return view ('welcome',['product' => $product ]);
-        }
-        else{
-            return redirect::route('showindex');
+        $mycity = $request->cookie('city');
+        $product = \App\Product::get()->where('pcity','=',$mycity , 'confirm_manager',1);
+        return view ('welcome',['product' => $product ]);
+        // if ($request->hasCookie('city')) {
+        // }
+        // else{
+        //     return redirect::route('showindex');}
 
-        }
     }
+
 
 
 

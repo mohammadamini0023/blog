@@ -16,11 +16,7 @@ class Product extends Model
         'body_product','expiration','confirm_manager',
         'sale_goods',
     ];
-    public function procategory()
-    {
-        return $this->hasMany('App\Procategory','product_id','product_id');
-    }
-
+    
     public function upload_image()
     {
         return $this->hasMany('App\Upload_image','product_id','product_id');
