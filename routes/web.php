@@ -27,6 +27,8 @@ Route::any('{all}', function () {
 // Auth::routes();
 // //user panel
 // Route::get('/home', 'HomeController@index')->name('home');
+
+
 // //admin panel
 // Route::get('/admin/home', 'AdminController@index')->name('admin');
 

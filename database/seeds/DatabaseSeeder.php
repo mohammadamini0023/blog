@@ -16,11 +16,11 @@ class DatabaseSeeder extends Seeder
         //$this->call(FindSeeder::class);
          //$this->call(CategorySeeder::class);
        //$this->call(CitySeeder::class);
-       $this->call(ProductSeeder::class);
+       //$this->call(ProductSeeder::class);
     //    $this->call(CommentSeeder::class);
     //    $this->call(EvaluationSeeder::class);
     //    $this->call(BiddingSeeder::class);
-    //     $this->call(UploadImageSeeder::class);
+        $this->call(UploadImageSeeder::class);
         //$this->call(SaleSeeder::class);
 
     }

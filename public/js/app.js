@@ -38354,7 +38354,7 @@ var Index = function (_React$Component) {
         __WEBPACK_IMPORTED_MODULE_5__material_react_layout_grid__["Grid"],
         null,
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Header, null),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Body, { urlcategory: this.props.match.params.categoryproducts })
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Body, { categoryproducts: this.props.match.params.categoryproducts, citycode: this.props.match.params.citycode })
       );
     }
   }]);
@@ -38445,7 +38445,7 @@ var Body = function (_React$Component3) {
       var _this4 = this;
 
       //get categorys
-      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('http://localhost:8080/api/category', { params: { category_id: this.props.urlcategory } }).then(function (response) {
+      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('http://localhost:8080/api/category', { params: { category_id: this.props.categoryproducts } }).then(function (response) {
         _this4.setState({
           categorys: response.data
         });
@@ -38454,7 +38454,7 @@ var Body = function (_React$Component3) {
       });
 
       //get Products
-      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('http://localhost:8080/api/procat', { params: { category_id: this.props.urlcategory } }).then(function (response) {
+      __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('http://localhost:8080/api/procat', { params: { category_id: this.props.categoryproducts, pcity: this.props.citycode } }).then(function (response) {
         _this4.setState({
           products: response.data
         });
@@ -38469,10 +38469,7 @@ var Body = function (_React$Component3) {
 
       if (category.children.length == 0) {
         this.setState({ category_id: category.category_id });
-        var cat = category.category_id;
-        console.log(category.category_id);
-
-        __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('http://localhost:8080/api/procat', { params: { category_id: this.props.urlcategory } }).then(function (response) {
+        __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('http://localhost:8080/api/procat', { params: { category_id: this.props.categoryproducts, pcity: this.props.citycode } }).then(function (response) {
           _this5.setState({
             products: response.data
           });
@@ -38481,15 +38478,14 @@ var Body = function (_React$Component3) {
         });
       } else if (true) {
 
-        var _cat = category.category_id;
-        __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('http://localhost:8080/api/category', { params: { category_id: this.props.urlcategory } }).then(function (response) {
+        __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('http://localhost:8080/api/category', { params: { category_id: this.props.categoryproducts } }).then(function (response) {
           _this5.setState({ categorys: response.data });
           console.log(category.category_id);
         }).catch(function (error) {
           console.log(error);
         });
 
-        __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('http://localhost:8080/api/procat', { params: { category_id: this.props.urlcategory } }).then(function (response) {
+        __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('http://localhost:8080/api/procat', { params: { category_id: this.props.categoryproducts, pcity: this.props.citycode } }).then(function (response) {
           _this5.setState({
             products: response.data
           });
@@ -38529,28 +38525,39 @@ var MenuRight = function (_React$Component4) {
 
     var _this6 = _possibleConstructorReturn(this, (MenuRight.__proto__ || Object.getPrototypeOf(MenuRight)).call(this, props));
 
-    _this6.state = { categorys: [] };
+    _this6.state = { categorys: [], cityname: [__WEBPACK_IMPORTED_MODULE_4_cookiejs__["a" /* default */].get('cityname')], citycode: [__WEBPACK_IMPORTED_MODULE_4_cookiejs__["a" /* default */].get('citycode')] };
+    _this6.allproduct = _this6.allproduct.bind(_this6);
+
     return _this6;
   }
 
   _createClass(MenuRight, [{
     key: 'renderRow',
-    value: function renderRow() {
+    value: function renderRow(cityname, citycode) {
       var _this7 = this;
 
       return this.props.categorys.map(function (category) {
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_3_react_router_dom__["b" /* Link */],
-          { to: '/products/' + category.category_id },
+          'div',
+          null,
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_6__material_react_list__["ListItem"],
-            { key: category.category_id, onClick: function onClick(e) {
-                return _this7.props.ButtonClick(e, category);
-              } },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__material_react_list__["ListItemText"], { primaryText: category.category })
+            __WEBPACK_IMPORTED_MODULE_3_react_router_dom__["b" /* Link */],
+            { key: category.category_id, to: '/city/' + citycode + '/' + cityname + '/products/' + category.category_id },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              __WEBPACK_IMPORTED_MODULE_6__material_react_list__["ListItem"],
+              { key: category.category_id, onClick: function onClick(e) {
+                  return _this7.props.ButtonClick(e, category);
+                } },
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__material_react_list__["ListItemText"], { key: category.category_id, primaryText: category.category })
+            )
           )
         );
       });
+    }
+  }, {
+    key: 'allproduct',
+    value: function allproduct() {
+      console.log("HI");
     }
   }, {
     key: 'render',
@@ -38561,7 +38568,12 @@ var MenuRight = function (_React$Component4) {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           __WEBPACK_IMPORTED_MODULE_6__material_react_list___default.a,
           { className: 'menu-right-group' },
-          this.renderRow()
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            __WEBPACK_IMPORTED_MODULE_6__material_react_list__["ListItem"],
+            { key: 'allproduct' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__material_react_list__["ListItemText"], { key: 'allproduct', primaryText: '\u0647\u0645\u0647 \u0622\u06AF\u0647\u06CC\u200C\u0647\u0627', onClick: this.allproduct })
+          ),
+          this.renderRow(this.state.cityname, this.state.citycode)
         )
       );
     }
@@ -38587,12 +38599,19 @@ var Products = function (_React$Component5) {
     value: function renderProducts() {
       return this.props.products.map(function (product) {
         var al = product.upload_image[0];
+        var el = "111.jpg";
+
+        if (al != undefined) {
+          el = al.path;
+        }
+
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           __WEBPACK_IMPORTED_MODULE_5__material_react_layout_grid__["Cell"],
           { key: product.product_id, columns: 3 },
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_7__material_react_card___default.a,
             null,
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { className: 'ui-image', src: '/uploads/' + el }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               'h5',
               null,
@@ -38669,7 +38688,7 @@ var selectcity = function (_React$Component7) {
 
     var _this10 = _possibleConstructorReturn(this, (selectcity.__proto__ || Object.getPrototypeOf(selectcity)).call(this, props));
 
-    _this10.state = { cityname: [], citycode: [], city: [] };
+    _this10.state = { cityname: [], citycode: [], citys: [] };
     _this10.handleclick = _this10.handleclick.bind(_this10);
 
     return _this10;
@@ -38733,8 +38752,7 @@ var selectcity = function (_React$Component7) {
       if (__WEBPACK_IMPORTED_MODULE_4_cookiejs__["a" /* default */].get('cityname') != false && __WEBPACK_IMPORTED_MODULE_4_cookiejs__["a" /* default */].get('citycode') != false) {
         var cityname = __WEBPACK_IMPORTED_MODULE_4_cookiejs__["a" /* default */].get('cityname');
         var citycode = __WEBPACK_IMPORTED_MODULE_4_cookiejs__["a" /* default */].get('citycode');
-
-        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_react_router_dom__["c" /* Redirect */], { to: '/' + citycode + '/' + cityname + '/products/' + 0 });
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_react_router_dom__["c" /* Redirect */], { to: '/city/' + citycode + '/' + cityname + '/products/' + 0 });
       }
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
@@ -38788,7 +38806,7 @@ var Exam = function (_React$Component8) {
             null,
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_react_router_dom__["d" /* Route */], { exact: true, path: '/', component: selectcity }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_react_router_dom__["d" /* Route */], { path: '/Aboute', component: Aboute }),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_react_router_dom__["d" /* Route */], { path: '/city/:codecity/:namecity/products/:categoryproducts', component: Index })
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_react_router_dom__["d" /* Route */], { path: '/city/:citycode/:cityname/products/:categoryproducts', component: Index })
           )
         )
       );

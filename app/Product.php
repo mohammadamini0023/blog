@@ -16,7 +16,7 @@ class Product extends Model
         'body_product','expiration','confirm_manager',
         'sale_goods',
     ];
-    
+
     public function upload_image()
     {
         return $this->hasMany('App\Upload_image','product_id','product_id');
@@ -32,10 +32,12 @@ class Product extends Model
     {
         return $this->hasMany('App\City','city_id','pcity');
     }
+
     public function field()
     {
         return $this->hasMany('App\Field','field_id','field_id');
     }
+    
     public function comment()
     {
         return $this->hasMany('App\Comment','product_id','product_id');

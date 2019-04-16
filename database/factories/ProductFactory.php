@@ -10,12 +10,12 @@ $factory->define(App\Product::class, function (Faker $faker) {
         'title_product' => $faker->name,
         'pprice' => $faker->randomNumber(2),
         'user_id' => $faker->randomElement($users),
-        'procategory' => $faker->randomElement($category),
+        'procategory' => $faker->numberbetween(11,18),
         'pcity' => $faker->randomElement($city),
         'body_product' => $faker->sentence,
         'sale_goods' => $faker->numberbetween(0,1),
         'expiration'=>$faker->numberbetween(1,3),
-        'confirm_manager'=>$faker->numberbetween(0,1),
+        'confirm_manager'=>1,
         'sale_goods'=>$faker->numberbetween(0,1),
     ];
 });

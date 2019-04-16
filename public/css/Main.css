@@ -16,6 +16,10 @@ body{
     align-content: center;
 }
 
+.ui-image{
+    width: 153px;
+    height: 153px;
+}
 
 @font-face {
   font-family: samim;

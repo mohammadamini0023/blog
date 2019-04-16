@@ -11,6 +11,6 @@ class UploadImageSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Upload_image::class, 20)->create();
+        factory(App\Upload_image::class, 30)->create();
     }
 }

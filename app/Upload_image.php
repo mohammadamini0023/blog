@@ -7,9 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Upload_image extends Model
 {
     protected $table='upload_image';
-    protected $fillable = [
-        'product_id','path',
-    ];
+    protected $fillable = ['product_id','path'];
+    public $timestamps = false;
     public function upload_image()
     {
         return $this->belongsTo('App\Product','product_id','product_id');

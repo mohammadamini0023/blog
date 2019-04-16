@@ -29,21 +29,26 @@ class ApiController extends Controller
 
 
     public function procat(request $request){
-    $category = $request->get('category_id',0);
-    $city = $request->get('city');
-    $category = Category::where('parent_id',$category)->with('children')->get();
+    $category_id = $request->get('category_id',0);
+    $city = $request->get('pcity');
+    $category = Category::where('parent_id',$category_id)->with('children')->get();
 
 
       $numcategory=count($category);
       $numberSubCategory=0;
       $subCategory;
 
-      if($category->isEmpty())
-      {
-        $products=Product::where([['procategory','=', $request -> get('category_id',0)],['pcity','=',$city]] )->with('Upload_image')->orderByDesc('pprice')->get();
+      if($category_id==0){
+        $products=Product::where([['pcity','=',$city],['confirm_manager','=',1]] )->with('Upload_image')->orderByDesc('pprice')->get();
         return response()->json($products,200);
       }
 
+      else if($category->isEmpty())
+      {
+        $products=Product::where([['procategory','=', $category_id],['pcity','=',$city],['confirm_manager','=',1]] )->with('Upload_image')->orderByDesc('pprice')->get();
+        return response()->json($products,200);
+      }
+      else{
         for ($i=0; $i < $numcategory ; $i++) {
            $numberchildren=count($category[$i]->children);
               if ($category[$i]->children->isEmpty()) {
@@ -57,8 +62,8 @@ class ApiController extends Controller
                   }
               }
            }
-
-        $products=Product::whereIn('procategory', $subCategory)->where('pcity','=',$city)->with('Upload_image')->orderByDesc('pprice')->get();
+        }
+        $products=Product::whereIn('procategory', $subCategory)->where([['pcity','=',$city],['confirm_manager','=',1]])->with('Upload_image')->orderByDesc('pprice')->get();
 
        return response()->json($products,200);
   }
