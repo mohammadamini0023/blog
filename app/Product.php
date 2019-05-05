@@ -30,14 +30,14 @@ class Product extends Model
 
     public function city()
     {
-        return $this->hasMany('App\City','city_id','pcity');
+        return $this->hasMany(City::class,'city_id','pcity');
     }
 
     public function field()
     {
         return $this->hasMany('App\Field','field_id','field_id');
     }
-    
+
     public function comment()
     {
         return $this->hasMany('App\Comment','product_id','product_id');

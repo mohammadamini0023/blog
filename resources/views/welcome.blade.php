@@ -5,10 +5,8 @@
         <title>Laravel</title>
         <!-- Styles -->
 
-        <link rel="stylesheet" type="text/css" href="/css/material-components-web.min.css">
-        {{-- <link rel="stylesheet" href="/css/app.css"> --}}
         <link rel="stylesheet" type="text/css" href="/css/Main.css">
-
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 
     </head>
     <body>

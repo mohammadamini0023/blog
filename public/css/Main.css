@@ -1,3 +1,16 @@
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+.col-menuright{
+  margin-left: 0%;
+}
+.col-product{
+  margin-right: 0%;
+}
+
+
+
 body{
   text-align: right;
   direction: rtl;

@@ -17,12 +17,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('category','ApiController@showcategoryget')->name('showcategoryget');
 
-Route::get('procat','ApiController@procat')->name('procat');
+//index route
+Route::get('ProCategoryIndex','ApiController@ProCategoryIndex')->name('ProCategoryIndex');
+Route::get('Category','ApiController@showcategoryget')->name('showcategoryget');
+
+//index route for select product in by category
+Route::get('ProCategorySelect','ApiController@ProCategorySelect')->name('ProCategorySelect');
+
+
 
 Route::get('getcity','ApiController@getcity')->name('getcity');
 
 Route::get('AllProduct','ApiController@showallproduct')->name('showallproduct');
-
-

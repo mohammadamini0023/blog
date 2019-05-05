@@ -8,6 +8,17 @@ use Illuminate\Support\Facades\DB;
 use Image;
 use Illuminate\Support\Carbon;
 
+use App\Product;
+use App\Category;
+use App\City;
+use App\Procategory;
+use App\Upload_image;
+use App\Bidding;
+use App\Comment;
+
+
+
+
 
 class HomeController extends Controller
 {
@@ -39,26 +50,24 @@ class HomeController extends Controller
     // contoroller show page AddProduct
     public function AddProductGet()
     {
-        $category = DB::table('category')->where('parent_id','=',0)->get();
-        return view('panel.selectcategory',['category' => $category]);
+      $category = Category::where('parent_id','=',0)->get();
+      return view('panel.selectcategory',['category' => $category]);
     }
 
 
-
+    //add product get form
     public function AddProductGet1($category_id)
     {
-        $category = \App\Category::with('children')->where('category_id','=',$category_id)->get();
-        $city = DB::table('city')->get();
+        $category = Category::with('children')->where('category_id','=',$category_id)->get();
+        $city = City::get();
         foreach($category as $categorys)
         {
-            if( $categorys->children == '[]')
-                {
-
-                    return view('panel.addproduct',['city' => $city , 'category' => $categorys->category_id]);
-                }
-                $subcategory=$categorys->children;
-                return view('panel.selectcategory' , [ 'category' => $subcategory ]);
-            }
+          if( $categorys->children == '[]'){
+                return view('panel.addproduct',['city' => $city , 'category' => $categorys->category_id]);
+              }
+          $subcategory=$categorys->children;
+          return view('panel.selectcategory' , [ 'category' => $subcategory ]);
+          }
         }
 
 
@@ -66,10 +75,8 @@ class HomeController extends Controller
      // contoriller show page AddProductPost
     public function AddProductPost(Request $request)
     {
-
-
         //insert product in table product
-         $product_id = DB::table('product')->insertGetId(
+         $product_id = Product::insertGetId(
             [
                 'user_id'=>  $request['user_id'],
                 'pprice'=>  $request['pprice'],
@@ -78,85 +85,70 @@ class HomeController extends Controller
                 'body_product'=>  $request['body_product'],
                 'expiration'=>  $request['expiration'],
              ]);
-
-             //insert category
-             DB::table('procategory')->insert([
-                 'category_id' => $request['category'],
-                 'product_id' => $product_id,
-             ]);
-             //upload image
-              if($request->hasFile('upimg')){
-                foreach($request->upimg as $upimgs){
-                        $counter=rand(0, 10);
-                        $filename = time() . $counter .'.' . $upimgs->getClientOriginalExtension();
-                        Image::make($upimgs)->resize(500, 500)->save( public_path('/uploads/' . $filename ) );
-                        DB::table('upload_image')->insert(
-                        ['product_id' =>  $product_id,
-                        'path' => $filename,
-                        ]);
-                        }
-                }
-
-            return view('/home');
+        //insert category
+        Procategory::insert([
+          'category_id' => $request['category'],
+          'product_id' => $product_id,
+        ]);
+        //upload image
+        if($request->hasFile('upimg')){
+            foreach($request->upimg as $upimgs){
+                  $counter=rand(0, 10);
+                  $filename = time() . $counter .'.' . $upimgs->getClientOriginalExtension();
+                  Image::make($upimgs)->resize(500, 500)->save( public_path('/uploads/' . $filename ) );
+                  Upload_image::insert(
+                  ['product_id' =>  $product_id,
+                  'path' => $filename,
+                  ]);
+            }
+          }
+        return view('/home');
     }
 
-
-
-
-
+    //show product by id
     public function ShowProduct($id)
     {
-        $product = \App\Product::with('comment','city','bidding')->where('user_id','=',$id)->get();
-        $img = \App\Upload_image::get();
+        $product = Product::with('comment','city','bidding')->where('user_id','=',$id)->get();
+        $img = Upload_image::get();
         return view('panel.showproduct',['product' => $product , 'img'=> $img ]);
     }
 
-
+    //show reject product
     public function showrejectproduct($id)
     {
-        $product = \App\Product::with('comment','city','bidding')->where([['user_id','=',$id],['reject_manager' , 1]])->get();
-        $img = \App\Upload_image::get();
+        $product = Product::with('comment','city','bidding')->where([['user_id','=',$id],['reject_manager' , 1]])->get();
+        $img = Upload_image::get();
         return view('panel.showrejectproduct',['product' => $product , 'img'=> $img ]);
     }
 
-
+    //show bindding by id user
     public function Showbidding($id)
     {
-        $bidding = \App\Bidding::with('product')->where('user_id','=',$id)->get();
-
+        $bidding = Bidding::with('product')->where('user_id','=',$id)->get();
         return view('panel.showbidding',['bidding' => $bidding ]);
     }
 
-
-
-
-
+    //method delete product
     public function DeleteProduct($product_id)
     {
-        $delete1 = \App\Product::where('product_id','=',$product_id)->delete();
+        $delete1 = Product::where('product_id','=',$product_id)->delete();
         return redirect::route('ShowProduct',['id'=>Auth::id()])->with('status','delete product');
     }
 
-
-
-
-
+    //updata product get form
     public function updataproductGet($product_id)
     {
-        $product = DB::table('product')->get()->where('product_id','=',$product_id);
-        $upload = DB::table('upload_image')->get()->where('product_id','=',$product_id);
-        $category = DB::table('category')->pluck('category');
+        $product = Product::get()->where('product_id','=',$product_id);
+        $upload = Upload_image::get()->where('product_id','=',$product_id);
+        $category = Category::pluck('category');
         return view('panel.updataproduct',['product' => $product , 'upload' => $upload , 'category' => $category]);
     }
 
-
-
-
-
+    //updata produt by post product
     public function updataproductPost($product_id, Request $request)
     {
-        $category = DB::table('category')->where('category','=',$request['category'])->get(['category_id']);
-        DB::table('product')->where('product_id', $product_id)->update([
+        $category = Category::where('category','=',$request['category'])->get(['category_id']);
+        Product::where('product_id', $product_id)->update([
             'name' => $request['name'],
             'pprice' => $request['pprice'],
             'color' => $request['color'],
@@ -166,69 +158,57 @@ class HomeController extends Controller
             'expiration_at'=> '2018-06-30 16:29:30',
             ]);
 
-            DB::table('procategory')->where('product_id', $product_id)->update([
-                'category_id'  =>$category[0]->category_id,
-            ]);
+        Procategory::where('product_id', $product_id)->update([
+            'category_id'  =>$category[0]->category_id,
+        ]);
 
+        if($request->hasFile('upimg')){
+            $upimg = $request->file('upimg');
+            $filename = time() . '.' . $upimg->getClientOriginalExtension();
+            Image::make($upimg)->resize(500, 500)->save( public_path('/uploads/' . $filename ) );
+            Upload_image::where('product_id','=', $product_id)->update(
+                ['path' => $filename,]);
+          }
+        return redirect()->action('HomeController@ShowProduct',['id' => Auth::id()]);
+      }
 
-            if($request->hasFile('upimg')){
-                $upimg = $request->file('upimg');
-                $filename = time() . '.' . $upimg->getClientOriginalExtension();
-                Image::make($upimg)->resize(500, 500)->save( public_path('/uploads/' . $filename ) );
-                DB::table('upload_image')->where('product_id','=', $product_id)->update(
-                    [
-                     'path' => $filename,
-                     ]);
-                    }
+      //method set bidding fot product
+      public function Bidding(Request $request)
+      {
+          Bidding::insert([
+              'user_id' => $request['user_id'],
+              'product_id' => $product_id = $request['product_id'],
+              'bprice' => $bprice = $request['bprice'],
+          ]);
+          return redirect()->action('Indexcontroller@singlepage',['product_id' => $product_id])->with('status','پیشنهاد قیمت شما با {{ $bprice }}موفقیت ثبت شد');
+      }
 
-            return redirect()->action('HomeController@ShowProduct',['id' => Auth::id()]);
-            }
+      //mothod send comment
+      public function sendcomment( Request $request )
+      {
+        Comment::insert([
+            'user_id' => $request['user_id'],
+            'product_id' => $product_id = $request['product_id'],
+            'body' =>  $request['body'],
+            'replay' => $request['body'],
+            'user_id2' => $request['user_id'],
+        ]);
+        return redirect()->action('Indexcontroller@singlepage',['product_id' => $product_id])->with('status','نظر شما با موفقیت ثبت شد.');
+      }
 
+      //method select city
+      public function editecity()
+      {
+        $city = City::get();
+        return view('selectcity',['city' => $city]);
+      }
 
-
-
-
-            public function Bidding(  Request $request)
-            {
-                DB::table('Bidding')->insert([
-                    'user_id' => $request['user_id'],
-                    'product_id' => $product_id = $request['product_id'],
-                    'bprice' => $bprice = $request['bprice'],
-                ]);
-                return redirect()->action('Indexcontroller@singlepage',['product_id' => $product_id])->with('status','پیشنهاد قیمت شما با {{ $bprice }}موفقیت ثبت شد');
-            }
-
-
-
-
-
-
-            public function sendcomment( Request $request )
-            {
-                DB::table('comment')->insert([
-                    'user_id' => $request['user_id'],
-                    'product_id' => $product_id = $request['product_id'],
-                    'body' =>  $request['body'],
-                    'replay' => $request['body'],
-                    'user_id2' => $request['user_id'],
-                ]);
-                return redirect()->action('Indexcontroller@singlepage',['product_id' => $product_id])->with('status','نظر شما با موفقیت ثبت شد.');
-
-            }
-
-            public function editecity()
-            {
-                $city = \App\City::get();
-                return view('selectcity',['city' => $city]);
-            }
-
-            public function auctionswinner($user_id)
-            {
-                $bidding = \App\Bidding::with('product')->where('user_id','=',$user_id )->max('bprice');
-                dd($bidding);
-
-                $city = \App\City::get();
-                return view('selectcity',['city' => $city]);
-            }
+      //auction swinner
+      public function auctionswinner($user_id)
+      {
+          $bidding = Bidding::with('product')->where('user_id','=',$user_id )->max('bprice');
+          $city = City::get();
+          return view('selectcity',['city' => $city]);
+      }
 
 }

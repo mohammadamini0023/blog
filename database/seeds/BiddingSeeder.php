@@ -11,7 +11,7 @@ class BiddingSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Bidding::class, 100)->create();
+        factory(App\Bidding::class, 500)->create();
 
     }
 }

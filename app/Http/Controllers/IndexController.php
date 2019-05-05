@@ -7,46 +7,44 @@ use Illuminate\Http\Response;
 use Cookie;
 use Redirect;
 
+use App\Product;
+use App\City;
+use App\Upload_image;
 
 
 class IndexController extends Controller
 {
-
-
-
-public function showindex(Request $request)
-  {
+    //show index and if set cookie
+    public function showindex(Request $request)
+      {
         if ($request->has('entercity')) {
             return redirect::route('showindex2')->withcookie(cookie::forever('city',$request['entercity']));
         }
 
-      elseif($request->cookie('city') == null){
-          $city = \App\City::get();
+        elseif($request->cookie('city') == null){
+          $city = City::get();
         return view('selectcity',['city' => $city]);
-      }
+        }
     }
 
+    //show product in page
     public function showindex2(Request $request )
     {
-        $mycity = $request->cookie('city');
-        $product = \App\Product::get()->where('pcity','=',$mycity , 'confirm_manager',1);
-        return view ('welcome',['product' => $product ]);
-        // if ($request->hasCookie('city')) {
-        // }
-        // else{
-        //     return redirect::route('showindex');}
+      $mycity = $request->cookie('city');
+      $product = Product::get()->where('pcity','=',$mycity , 'confirm_manager',1);
+      return view ('welcome',['product' => $product ]);
+      // if ($request->hasCookie('city')) {
+      // }
+      // else{
+      //     return redirect::route('showindex');}
 
     }
 
-
-
-
-
-public function Singlepage($product_id)
-    {
-        $product = \App\Product::with('comment','city','bidding')->get()->where('product_id','=',$product_id);
-        $upload  = \App\Upload_image::get()->where('product_id','=',$product_id);
-
-        return view('singlepage',['product' => $product , 'upload' => $upload ]);
-    }
+    //show single page
+    public function Singlepage($product_id)
+        {
+            $product = Product::with('comment','city','bidding')->get()->where('product_id','=',$product_id);
+            $upload  = Upload_image::get()->where('product_id','=',$product_id);
+            return view('singlepage',['product' => $product , 'upload' => $upload ]);
+        }
 }
